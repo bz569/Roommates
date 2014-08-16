@@ -10,6 +10,7 @@
 		B2101C1F19319CAC00623298 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2101C1E19319CAC00623298 /* SignUpViewController.m */; };
 		B2101C2219331CB800623298 /* ChooseRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2101C2119331CB800623298 /* ChooseRoomViewController.m */; };
 		B214BF0D19365E66004B2DC3 /* ChooseBuildingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B214BF0C19365E66004B2DC3 /* ChooseBuildingViewController.m */; };
+		B21EBF6B199F1E0100730550 /* MessageChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B21EBF6A199F1E0100730550 /* MessageChatViewController.m */; };
 		B22B77191935444C00ED2938 /* ChooseSchoolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B22B77181935444C00ED2938 /* ChooseSchoolViewController.m */; };
 		B235C8901990325300AF74AE /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B235C88E1990323600AF74AE /* Parse.framework */; };
 		B244C0BA19305B9D002F65F0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B244C0B919305B9D002F65F0 /* Foundation.framework */; };
@@ -179,6 +180,7 @@
 		B29302BA199D585E0068213E /* NewStickyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B29302B5199D585E0068213E /* NewStickyViewController.m */; };
 		B29302BB199D585E0068213E /* Sticky.m in Sources */ = {isa = PBXBuildFile; fileRef = B29302B7199D585E0068213E /* Sticky.m */; };
 		B29302BC199D585E0068213E /* StickyView.m in Sources */ = {isa = PBXBuildFile; fileRef = B29302B9199D585E0068213E /* StickyView.m */; };
+		B29302C0199DA3000068213E /* MessageUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B29302BF199DA3000068213E /* MessageUserListViewController.m */; };
 		B2A169D1199A8A3D003B3D98 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2A169D0199A8A3D003B3D98 /* Images.xcassets */; };
 		B2A169D4199A8F87003B3D98 /* StickyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A169D3199A8F87003B3D98 /* StickyViewController.m */; };
 /* End PBXBuildFile section */
@@ -200,6 +202,8 @@
 		B2101C2119331CB800623298 /* ChooseRoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseRoomViewController.m; sourceTree = "<group>"; };
 		B214BF0B19365E66004B2DC3 /* ChooseBuildingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseBuildingViewController.h; sourceTree = "<group>"; };
 		B214BF0C19365E66004B2DC3 /* ChooseBuildingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseBuildingViewController.m; sourceTree = "<group>"; };
+		B21EBF69199F1E0100730550 /* MessageChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageChatViewController.h; path = Message/MessageChatViewController.h; sourceTree = "<group>"; };
+		B21EBF6A199F1E0100730550 /* MessageChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageChatViewController.m; path = Message/MessageChatViewController.m; sourceTree = "<group>"; };
 		B22B77171935444C00ED2938 /* ChooseSchoolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseSchoolViewController.h; sourceTree = "<group>"; };
 		B22B77181935444C00ED2938 /* ChooseSchoolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseSchoolViewController.m; sourceTree = "<group>"; };
 		B235C88E1990323600AF74AE /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
@@ -529,6 +533,8 @@
 		B29302B7199D585E0068213E /* Sticky.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Sticky.m; path = Sticky/Sticky.m; sourceTree = "<group>"; };
 		B29302B8199D585E0068213E /* StickyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StickyView.h; path = Sticky/StickyView.h; sourceTree = "<group>"; };
 		B29302B9199D585E0068213E /* StickyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StickyView.m; path = Sticky/StickyView.m; sourceTree = "<group>"; };
+		B29302BE199DA3000068213E /* MessageUserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageUserListViewController.h; path = Message/MessageUserListViewController.h; sourceTree = "<group>"; };
+		B29302BF199DA3000068213E /* MessageUserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageUserListViewController.m; path = Message/MessageUserListViewController.m; sourceTree = "<group>"; };
 		B2A169D0199A8A3D003B3D98 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B2A169D2199A8F87003B3D98 /* StickyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StickyViewController.h; path = Sticky/StickyViewController.h; sourceTree = "<group>"; };
 		B2A169D3199A8F87003B3D98 /* StickyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StickyViewController.m; path = Sticky/StickyViewController.m; sourceTree = "<group>"; };
@@ -618,6 +624,7 @@
 			children = (
 				B244C0CB19305B9D002F65F0 /* Main.storyboard */,
 				B28D13961952C1AE00F6201E /* Login */,
+				B29302BD199DA2C90068213E /* Message */,
 				B28D139A1952C7F500F6201E /* Main */,
 				B2A169CF199A6AFD003B3D98 /* NoticeBoard */,
 				B244C0C019305B9D002F65F0 /* Supporting Files */,
@@ -1540,6 +1547,17 @@
 			path = "XEP-0335";
 			sourceTree = "<group>";
 		};
+		B29302BD199DA2C90068213E /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				B29302BE199DA3000068213E /* MessageUserListViewController.h */,
+				B29302BF199DA3000068213E /* MessageUserListViewController.m */,
+				B21EBF69199F1E0100730550 /* MessageChatViewController.h */,
+				B21EBF6A199F1E0100730550 /* MessageChatViewController.m */,
+			);
+			name = Message;
+			sourceTree = "<group>";
+		};
 		B2A169CF199A6AFD003B3D98 /* NoticeBoard */ = {
 			isa = PBXGroup;
 			children = (
@@ -1697,6 +1715,7 @@
 				B293026B199D420E0068213E /* XMPPvCard.xcdatamodeld in Sources */,
 				B2930251199D420E0068213E /* XMPPUserCoreDataStorageObject.m in Sources */,
 				B2930267199D420E0068213E /* XMPPRoomOccupantMemoryStorageObject.m in Sources */,
+				B29302C0199DA3000068213E /* MessageUserListViewController.m in Sources */,
 				B293027B199D420E0068213E /* XMPPPubSub.m in Sources */,
 				B293028B199D420E0068213E /* XMPPMessageArchiving_Contact_CoreDataObject.m in Sources */,
 				B2930281199D420E0068213E /* XMPPMessage+XEP_0085.m in Sources */,
@@ -1740,6 +1759,7 @@
 				B2930129199D40BE0068213E /* XMPPDigestMD5Authentication.m in Sources */,
 				B2A169D4199A8F87003B3D98 /* StickyViewController.m in Sources */,
 				B29302A2199D420E0068213E /* NSXMLElement+XEP_0297.m in Sources */,
+				B21EBF6B199F1E0100730550 /* MessageChatViewController.m in Sources */,
 				B2930262199D420E0068213E /* XMPPRoomHybridStorage.m in Sources */,
 				B293014D199D40BE0068213E /* DDXMLNode.m in Sources */,
 				B2930139199D40BE0068213E /* DDList.m in Sources */,
