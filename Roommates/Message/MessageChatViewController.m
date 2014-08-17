@@ -7,6 +7,7 @@
 //
 
 #import "MessageChatViewController.h"
+#import "MessageCell.h"
 
 @interface MessageChatViewController ()
 
@@ -31,7 +32,21 @@
     self.messages = [NSMutableArray array];
     self.tv_chatView.delegate = self;
     self.tv_chatView.dataSource = self;
+    self.tv_chatView.tableFooterView = [[UIView alloc] init];
     
+    //键盘消失
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(keyboardHide:)];
+    //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
+    tapGestureRecognizer.cancelsTouchesInView = NO;
+    //将触摸事件添加到当前view
+    [self.view addGestureRecognizer:tapGestureRecognizer];
+    [self.tv_chatView addGestureRecognizer:tapGestureRecognizer];
+    
+    
+}
+
+-(void)keyboardHide:(UITapGestureRecognizer*)tap{
+    [self.tf_input resignFirstResponder];
 }
 
 - (void)setXmppStreamDelegate
@@ -63,6 +78,11 @@
     [self.messages addObject:messageContent];
     
     [self.tv_chatView reloadData];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.messages count] - 1 inSection:0];
+    [self.tv_chatView scrollToRowAtIndexPath:indexPath
+                            atScrollPosition:UITableViewScrollPositionBottom
+                                    animated:NO];
 }
 
 //发送消息
@@ -97,11 +117,16 @@
         
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setObject:message forKey:@"msg"];
-        [dict setObject:@"我" forKey:@"sender"];
+        [dict setObject:@"me" forKey:@"sender"];
 
         [self.messages addObject:dict];
         
         [self.tv_chatView reloadData];
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.messages count] - 1 inSection:0];
+        [self.tv_chatView scrollToRowAtIndexPath:indexPath
+                                atScrollPosition:UITableViewScrollPositionBottom
+                                        animated:NO];
     }
 }
 
@@ -116,6 +141,27 @@
     return 1;
 }
 
+//行高
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSMutableDictionary *dict = [self.messages objectAtIndex:indexPath.row];
+    NSString *msg = [dict objectForKey:@"msg"];
+    
+    CGSize textSize = CGSizeMake(250.0, 10000.0);
+    UIFont *font = [UIFont systemFontOfSize:13.0];
+    NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
+    CGSize size = [msg boundingRectWithSize:textSize
+                                    options:NSStringDrawingUsesLineFragmentOrigin
+                                 attributes:attributeDict
+                                    context:nil].size;
+    
+    size.height += 20;
+    
+    CGFloat height = size.height < 50 ? 50 : size.height;
+    
+    return height;
+}
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"msgCell";
@@ -127,21 +173,83 @@
         cellView = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     }
     
+    cellView.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     NSMutableDictionary *dict = [self.messages objectAtIndex:indexPath.row];
     
-    cellView.textLabel.text = [dict objectForKey:@"msg"];
-    cellView.detailTextLabel.text = [dict objectForKey:@"sender"];
-//    cellView.accessoryType = UITableViewCellAccessoryNone;
+    //文字内容大小
+    NSString *msg = [dict objectForKey:@"msg"];
+    CGSize textSize = CGSizeMake(220.0, 10000.0);
+    UIFont *font = [UIFont systemFontOfSize:13.0];
+    NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
+    CGSize size = [msg boundingRectWithSize:textSize
+                                    options:NSStringDrawingUsesLineFragmentOrigin
+                                 attributes:attributeDict
+                                    context:nil].size;
+    
+    CGFloat height = size.height < 30 ? 30 : size.height;
+    
+    
+    if([[dict objectForKey:@"sender"] isEqualToString:@"me"]) {      //发送的消息
+        
+        UILabel *l_msg = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, 250, height)];
+        l_msg.text = msg;
+        l_msg.textAlignment = NSTextAlignmentRight;
+        l_msg.font = [UIFont systemFontOfSize:13.0];
+        l_msg.lineBreakMode = NSLineBreakByCharWrapping;
+        l_msg.numberOfLines = 0;
+        [cellView addSubview:l_msg];
+        
+        //头像
+        UIImageView *iv_userIcon = [[UIImageView alloc] initWithFrame:CGRectMake(260, (height - 20) / 2, 40, 40)];
+        iv_userIcon.image = [UIImage imageNamed:@"default_userIcon"];
+        iv_userIcon.layer.masksToBounds = YES;
+        iv_userIcon.layer.cornerRadius = 20;
+        [cellView addSubview:iv_userIcon];
+    }else {     //收到的消息
+        
+        UILabel *l_msg = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, 250, height)];
+        l_msg.text = msg;
+        l_msg.textAlignment = NSTextAlignmentLeft;
+        l_msg.font = [UIFont systemFontOfSize:13.0];
+        l_msg.lineBreakMode = NSLineBreakByCharWrapping;
+        l_msg.numberOfLines = 0;
+        [cellView addSubview:l_msg];
+        
+        //头像
+        UIImageView *iv_userIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, (height - 20) / 2, 40, 40)];
+        iv_userIcon.image = [UIImage imageNamed:@"default_userIcon"];
+        iv_userIcon.layer.masksToBounds = YES;
+        iv_userIcon.layer.cornerRadius = 20;
+        [cellView addSubview:iv_userIcon];
+
+    }
+    
+    
     
     return cellView;
-}
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    if (![self.tf_input isExclusiveTouch]) {
-        [self.tf_input resignFirstResponder];
-    }
-}
-
+   }
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

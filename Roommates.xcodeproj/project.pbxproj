@@ -183,6 +183,7 @@
 		B29302C0199DA3000068213E /* MessageUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B29302BF199DA3000068213E /* MessageUserListViewController.m */; };
 		B2A169D1199A8A3D003B3D98 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2A169D0199A8A3D003B3D98 /* Images.xcassets */; };
 		B2A169D4199A8F87003B3D98 /* StickyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A169D3199A8F87003B3D98 /* StickyViewController.m */; };
+		B2C525AF19A03BD800E85F12 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B2C525AE19A03BD800E85F12 /* MessageCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -538,6 +539,8 @@
 		B2A169D0199A8A3D003B3D98 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B2A169D2199A8F87003B3D98 /* StickyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StickyViewController.h; path = Sticky/StickyViewController.h; sourceTree = "<group>"; };
 		B2A169D3199A8F87003B3D98 /* StickyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StickyViewController.m; path = Sticky/StickyViewController.m; sourceTree = "<group>"; };
+		B2C525AD19A03BD800E85F12 /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageCell.h; path = Message/MessageCell.h; sourceTree = "<group>"; };
+		B2C525AE19A03BD800E85F12 /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageCell.m; path = Message/MessageCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1554,6 +1557,8 @@
 				B29302BF199DA3000068213E /* MessageUserListViewController.m */,
 				B21EBF69199F1E0100730550 /* MessageChatViewController.h */,
 				B21EBF6A199F1E0100730550 /* MessageChatViewController.m */,
+				B2C525AD19A03BD800E85F12 /* MessageCell.h */,
+				B2C525AE19A03BD800E85F12 /* MessageCell.m */,
 			);
 			name = Message;
 			sourceTree = "<group>";
@@ -1755,6 +1760,7 @@
 				B293013A199D40BE0068213E /* GCDMulticastDelegate.m in Sources */,
 				B2930268199D420E0068213E /* XMPPMessage+XEP0045.m in Sources */,
 				B293029D199D420E0068213E /* XEP_0223.m in Sources */,
+				B2C525AF19A03BD800E85F12 /* MessageCell.m in Sources */,
 				B2930132199D40BE0068213E /* XMPPIQ.m in Sources */,
 				B2930129199D40BE0068213E /* XMPPDigestMD5Authentication.m in Sources */,
 				B2A169D4199A8F87003B3D98 /* StickyViewController.m in Sources */,
