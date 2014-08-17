@@ -279,7 +279,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="好友列表" id="kmG-gR-67B"/>
+                    <navigationItem key="navigationItem" title="好友列表" id="kmG-gR-67B">
+                        <barButtonItem key="leftBarButtonItem" title="关闭" id="6f9-Hi-8XL">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="onPressCloseButton:" destination="L8V-je-l6Z" id="OnN-E2-mmi"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tv_userList" destination="PVg-4T-FYo" id="Nng-2W-hj8"/>
                         <segue destination="vmN-ZM-suL" kind="push" identifier="segue_toChatView" id="TfF-LR-pL0"/>
@@ -304,14 +311,17 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ihf-kG-w4Q" userLabel="inputView">
                                 <rect key="frame" x="0.0" y="520" width="320" height="48"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n0x-RM-vqo">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入消息..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n0x-RM-vqo">
                                         <rect key="frame" x="8" y="8" width="258" height="30"/>
+                                        <color key="backgroundColor" red="0.3843137254901961" green="0.42745098039215684" blue="0.49019607843137253" alpha="0.82000000000000006" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lpg-bV-PaW">
                                         <rect key="frame" x="274" y="7" width="30" height="30"/>
                                         <state key="normal" title="发送">
+                                            <color key="titleColor" red="0.0" green="0.62352941176470589" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -319,14 +329,14 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.20784313730000001" green="0.23921568630000001" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="UoU-uN-qqe" userLabel="chatView">
                                 <rect key="frame" x="10" y="64" width="300" height="456"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.20784313725490194" green="0.23921568627450979" blue="0.28627450980392155" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="聊天界面" id="Xwg-Ck-3hG"/>
                     <connections>

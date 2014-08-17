@@ -25,8 +25,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0 green:187.0/255.0 blue:142.0/255.0 alpha:1.0];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],  NSForegroundColorAttributeName, nil]];
+    
     self.tv_userList.delegate = self;
     self.tv_userList.dataSource = self;
+    
+    self.tv_userList.tableFooterView = [[UIView alloc] init];
+    self.tv_userList.backgroundColor = [UIColor colorWithRed:53.0/255.0 green:61.0/255.0 blue:73.0/255.0 alpha:1.0];
+    self.tv_userList.separatorColor = [UIColor colorWithRed:43.0/255.0 green:48.0/255.0 blue:57.0/255.0 alpha:1.0];
     
     self.onlineUsers = [NSMutableArray array];
     
@@ -147,13 +156,21 @@
         cellView = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
 
+    cellView.selectedBackgroundView = [[UIView alloc] initWithFrame:cellView.frame];
+    cellView.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:40.0/255.0 green:45.0/255.0 blue:53.0/255.0 alpha:1.0];
+    cellView.backgroundColor = [UIColor colorWithRed:53.0/255.0 green:61.0/255.0 blue:73.0/255.0 alpha:1.0];
+    
     cellView.textLabel.text = (NSString*)[self.onlineUsers objectAtIndex:indexPath.row];
+    cellView.textLabel.textColor = [UIColor whiteColor];
     
     return cellView;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //取消背景颜色
+    [self.tv_userList deselectRowAtIndexPath:indexPath animated:YES];
+    
     //发启一个聊天
     self.toChatUsername = (NSString*)[self.onlineUsers objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"segue_toChatView" sender:self];
@@ -167,6 +184,11 @@
         [messageChatViewController setValue:self.toChatUsername forKey:@"chatWithUser"];
         [messageChatViewController setValue:self.xmppStream forKey:@"xmppStream"];
     }
+}
+
+- (IBAction)onPressCloseButton:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

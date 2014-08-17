@@ -9,6 +9,6 @@
 #import "ViewController.h"
 #import "XMPP.h"
 
-@interface MessageChatViewController : UIViewController <XMPPStreamDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface MessageChatViewController : UIViewController <XMPPStreamDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @end
