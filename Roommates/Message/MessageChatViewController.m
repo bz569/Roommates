@@ -33,7 +33,10 @@
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],  NSForegroundColorAttributeName, nil]];
     
-    self.messages = [NSMutableArray array];
+    if(self.messages == nil){
+        self.messages = [NSMutableArray array];
+    }
+    
     self.tv_chatView.delegate = self;
     self.tv_chatView.dataSource = self;
     self.tv_chatView.tableFooterView = [[UIView alloc] init];
@@ -284,7 +287,7 @@
    }
 
 
-//出现键盘是 界面上移
+//出现键盘时 界面上移
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     CGRect originFrame = self.view.frame;
