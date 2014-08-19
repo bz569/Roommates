@@ -77,6 +77,7 @@
     [UIView setAnimationDuration:animationDuration];
     
     self.view.frame = CGRectMake(0, 0 - keyboardRect.size.height, 320, 568);
+
     [UIView commitAnimations];
 
 }
@@ -311,7 +312,6 @@
 {
 
     [self.tf_input resignFirstResponder];
-        
     NSTimeInterval animationDuration = 0.30f;
     [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
     [UIView setAnimationDuration:animationDuration];

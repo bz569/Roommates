@@ -7,6 +7,7 @@
 //
 
 #import "MessageUserListViewController.h"
+#import <Parse/Parse.h>
 
 @interface MessageUserListViewController ()
 
@@ -69,10 +70,13 @@
     [self setXmppStreamDelegate];
     
     if (![self.xmppStream isConnected]) {
-        NSString *username = @"test";
-        XMPPJID *jid = [XMPPJID jidWithString:@"test@zapxmpp"];
+        
+        PFUser *user = [PFUser currentUser];
+        NSString *username = user.username;
+        XMPPJID *jid = [XMPPJID jidWithString:[NSString stringWithFormat:@"%@@zapxmpp", username]];
         [self.xmppStream setMyJID:jid];
-        [self.xmppStream setHostName:@"192.168.1.2"];
+//        [self.xmppStream setHostName:@"192.168.1.2"];
+        [self.xmppStream setHostName:@"69.127.17.176"];
         NSError *error = nil;
         if (![self.xmppStream connectWithTimeout:XMPPStreamTimeoutNone error:&error]) {
             NSLog(@"Connect Error: %@", [[error userInfo] description]);
@@ -85,7 +89,8 @@
 //验证密码
 - (void)xmppStreamDidConnect:(XMPPStream *)sender
 {
-    NSString *password = @"test";
+    PFUser *user = [PFUser currentUser];
+    NSString *password = user.objectId;
     NSError *error = nil;
     if (![self.xmppStream authenticateWithPassword:password error:&error]) {
         NSLog(@"Authenticate Error: %@", [[error userInfo] description]);

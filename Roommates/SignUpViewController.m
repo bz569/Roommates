@@ -8,6 +8,7 @@
 
 #import "SignUpViewController.h"
 #import <Parse/Parse.h>
+#import "MD5.h"
 
 @interface SignUpViewController ()
 
@@ -18,6 +19,10 @@
 @property (strong, nonatomic) UITextField *tf_password;
 @property (strong, nonatomic) UITextField *tf_passwordConfirm;
 @property (strong, nonatomic) UITextField *tf_email;
+
+@property (strong, nonatomic) NSString *username;
+
+@property (strong, nonatomic) XMPPStream *xmppStream;
 
 @end
 
@@ -138,13 +143,18 @@
             newUser.username = self.tf_username.text;
             newUser.password = self.tf_password.text;
             newUser.email = self.tf_email.text;
+            self.username = self.tf_username.text;
             
             
             [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                                     if(!error)
                                                     {
                                                         NSLog(@"注册成功");
-                                                        [self dismissViewControllerAnimated:YES completion:nil];
+                                                        
+                                                        //在XMPP服务器上注册用户
+                                                        [self connectXMPPServerToRegister];
+                                                        
+//                                                        [self dismissViewControllerAnimated:YES completion:nil];
                                                     }else
                                                     {
                                                         NSString *errorString = [error userInfo][@"error"];
@@ -266,6 +276,72 @@
     return YES;
 }
 
+//register on XMPP server
+
+- (void)connectXMPPServerToRegister
+{
+    if (self.xmppStream == nil) {
+        self.xmppStream = [[XMPPStream alloc] init];
+        [self.xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    }
+
+    
+    if (![self.xmppStream isConnected]) {
+        
+        PFUser *user = [PFUser currentUser];
+        NSString *username = user.username;
+        XMPPJID *jid = [XMPPJID jidWithString:[NSString stringWithFormat:@"%@@zapxmpp", username]];
+        [self.xmppStream setMyJID:jid];
+        //        [self.xmppStream setHostName:@"192.168.1.2"];
+        [self.xmppStream setHostName:@"69.127.17.176"];
+        NSError *error = nil;
+        if (![self.xmppStream connectWithTimeout:XMPPStreamTimeoutNone error:&error]) {
+            NSLog(@"Connect Error: %@", [[error userInfo] description]);
+        }else {
+            NSLog(@"connect successfully");
+        }
+    }
+    
+}
+
+- (void)xmppStreamDidConnect:(XMPPStream *)sender
+{
+    //找到新注册的用户
+    PFQuery *query = [PFUser query];
+    [query whereKey:@"username" equalTo:self.username];
+    NSArray *result = [query findObjects];
+    PFUser *user = [result objectAtIndex:0];
+    
+    
+    //暂且先用user的objectID作为聊天的密码
+    NSString *username = user.username;
+    NSString *password = user.objectId;
+    
+    NSString *jid = [[NSString alloc] initWithFormat:@"%@@%@", username, @"zapxmpp"];
+    [self.xmppStream setMyJID:[XMPPJID jidWithString:jid]];
+    
+    NSError *error=nil;
+    if (![self.xmppStream registerWithPassword:password error:&error])
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建聊天帐号失败"
+                                                            message:[error localizedDescription]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"Ok"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    }
+}
+
+- (void)xmppStreamDidRegister:(XMPPStream *)sender
+{
+    NSLog(@"XMPP注册成功");
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)xmppStream:(XMPPStream *)sender didNotRegister:(DDXMLElement *)error
+{
+    NSLog(@"xmpp注册失败：%@", error);
+}
 
 /*
 #pragma mark - Navigation

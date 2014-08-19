@@ -7,7 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "XMPP.h"
 
-@interface SignUpViewController : ViewController <UITextFieldDelegate>
+@interface SignUpViewController : ViewController <UITextFieldDelegate, XMPPStreamDelegate>
 
 @end

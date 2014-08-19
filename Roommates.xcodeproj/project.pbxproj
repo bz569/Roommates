@@ -184,6 +184,7 @@
 		B2A169D1199A8A3D003B3D98 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2A169D0199A8A3D003B3D98 /* Images.xcassets */; };
 		B2A169D4199A8F87003B3D98 /* StickyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A169D3199A8F87003B3D98 /* StickyViewController.m */; };
 		B2C525AF19A03BD800E85F12 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B2C525AE19A03BD800E85F12 /* MessageCell.m */; };
+		B2CF3B5719A3C3BB0036CEBF /* MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CF3B5619A3C3BB0036CEBF /* MD5.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -541,6 +542,8 @@
 		B2A169D3199A8F87003B3D98 /* StickyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StickyViewController.m; path = Sticky/StickyViewController.m; sourceTree = "<group>"; };
 		B2C525AD19A03BD800E85F12 /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageCell.h; path = Message/MessageCell.h; sourceTree = "<group>"; };
 		B2C525AE19A03BD800E85F12 /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageCell.m; path = Message/MessageCell.m; sourceTree = "<group>"; };
+		B2CF3B5519A3C3BB0036CEBF /* MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MD5.h; path = Utils/MD5.h; sourceTree = "<group>"; };
+		B2CF3B5619A3C3BB0036CEBF /* MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MD5.m; path = Utils/MD5.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -631,6 +634,7 @@
 				B28D139A1952C7F500F6201E /* Main */,
 				B2A169CF199A6AFD003B3D98 /* NoticeBoard */,
 				B244C0C019305B9D002F65F0 /* Supporting Files */,
+				B2CF3B5419A3C38E0036CEBF /* Utils */,
 			);
 			path = Roommates;
 			sourceTree = "<group>";
@@ -1578,6 +1582,15 @@
 			name = NoticeBoard;
 			sourceTree = "<group>";
 		};
+		B2CF3B5419A3C38E0036CEBF /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B2CF3B5519A3C3BB0036CEBF /* MD5.h */,
+				B2CF3B5619A3C3BB0036CEBF /* MD5.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1798,6 +1811,7 @@
 				B264E61219546DBC0002AB39 /* MeViewController.m in Sources */,
 				B2930146199D40BE0068213E /* DDContextFilterLogFormatter.m in Sources */,
 				B293027C199D420E0068213E /* TURNSocket.m in Sources */,
+				B2CF3B5719A3C3BB0036CEBF /* MD5.m in Sources */,
 				B2930136199D40BE0068213E /* XMPPParser.m in Sources */,
 				B214BF0D19365E66004B2DC3 /* ChooseBuildingViewController.m in Sources */,
 				B2930286199D420E0068213E /* XMPPCapabilitiesCoreDataStorage.m in Sources */,
