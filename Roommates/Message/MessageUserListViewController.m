@@ -14,11 +14,14 @@
 @property (weak, nonatomic) IBOutlet UITableView *tv_userList;
 
 @property (strong, nonatomic) XMPPStream *xmppStream;
+@property (strong, nonatomic) XMPPRoster *xmppRoster;
 @property (strong, nonatomic) NSMutableArray *onlineUsers;
 @property (strong, nonatomic) NSMutableArray *userList;
 @property (strong, nonatomic) NSMutableDictionary *unreadMessages;
 
 @property (strong, nonatomic) NSString *toChatUsername;
+
+@property (strong, nonatomic) PFUser *curUser;
 
 @end
 
@@ -43,6 +46,8 @@
     self.onlineUsers = [NSMutableArray array];
     self.userList = [NSMutableArray array];
     self.unreadMessages = [NSMutableDictionary dictionary];
+    
+    self.curUser = [PFUser currentUser];
     
     [self connect];
     
@@ -119,11 +124,10 @@
 {
     XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
     [self.xmppStream sendElement:presence];
-    
     [self.xmppStream disconnect];
 }
 
-//收到好友状态
+//收到好友状态或好友请求
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
 {
 //    NSLog(@"didReceivePresence = %@", presence);
@@ -141,6 +145,20 @@
             [self newBuddyOnline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, @"zapxmpp"]];
         }else if([presenceType isEqualToString:@"unavailable"]){
             [self buddyWentOffline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, @"zapxmpp"]];
+        }else if([presenceType isEqualToString:@"subscribe"]){
+            //收到好友请求
+            
+            if(self.xmppRoster == nil)
+            {
+                XMPPRosterCoreDataStorage *xmppRosterStorage = [[XMPPRosterCoreDataStorage alloc] initWithInMemoryStore];
+                self.xmppRoster = [[XMPPRoster alloc] initWithRosterStorage:xmppRosterStorage];
+                [self.xmppRoster activate:self.xmppStream];
+            }
+            
+            XMPPJID *jid = [XMPPJID jidWithString:[NSString stringWithFormat:@"%@",[presence from]]];
+            [self.xmppRoster acceptPresenceSubscriptionRequestFrom:jid andAddToRoster:YES];
+            //刷新好友列表
+//            [self queryRoster];
         }
     }
 }
@@ -208,29 +226,36 @@
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
 {
     if ([@"result" isEqualToString:iq.type]) {
+//        NSLog(@"%@", iq);
         NSXMLElement *query = iq.childElement;
         if([@"query" isEqualToString:query.name]){
             NSArray *items = [query children];
             for (NSXMLElement *item in items){
                 NSString *jid = [[item attributeForName:@"jid"] stringValue];
                 NSString *name = [[item attributeForName:@"name"] stringValue];
+                NSString *subscription = [[item attributeForName:@"subscription"] stringValue];
                 
-                NSString *status;
-                if([self.onlineUsers containsObject:jid]){
-                    status = @"online";
-                }else {
-                    status = @"offline";
+                if([subscription isEqualToString:@"both"])
+                {
+                    NSString *status;
+                    if([self.onlineUsers containsObject:jid]){
+                        status = @"online";
+                    }else {
+                        status = @"offline";
+                    }
+                
+                    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:jid, @"jid", name, @"name", status, @"status",nil];
+                    [self.userList addObject:dict];
                 }
-                
-                NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:jid, @"jid", name, @"name", status, @"status",nil];
-                [self.userList addObject:dict];
             }
-        }
             
+            [self willAddRoster];
+            [self.tv_userList reloadData];
+        }
+
     }
     
-    [self.tv_userList reloadData];
-    return YES;
+        return YES;
 }
 
 //收到好友消息
@@ -261,6 +286,59 @@
     }
 }
 
+//添加同宿舍好友
+- (void)willAddRoster
+{
+    if(self.xmppRoster == nil)
+    {
+        XMPPRosterCoreDataStorage *xmppRosterStorage = [[XMPPRosterCoreDataStorage alloc] initWithInMemoryStore];
+        self.xmppRoster = [[XMPPRoster alloc] initWithRosterStorage:xmppRosterStorage];
+        
+        [self.xmppRoster activate:self.xmppStream];
+    }
+    
+    //从Parse中获取同宿舍用户名单
+//    PFUser *currentUser = [PFUser currentUser];
+//    [currentUser refresh];
+    NSString *roomID = self.curUser[@"roomID"];
+    PFQuery *query = [PFUser query];
+    [query whereKey:@"roomID" equalTo:roomID];
+    NSArray *roommatesArray = [query findObjects];
+    
+    //从parse获取roommate名单，不是自己，且不在Roster中得，发送添加好友请求
+    for (PFUser *roommate in roommatesArray) {
+        NSLog(@"roomate=%@, self=%@", roommate[@"username"], self.curUser.username);
+        
+        if(![roommate.username isEqualToString: self.curUser.username]){
+            
+            if(![self isRoommateExistedInRosterWithName:roommate[@"name"]]){
+                [self addRosterWithUserName:roommate.username NickName:roommate[@"name"]];
+            }
+            
+        }
+    }
+}
+
+//判断roommate是否已在Roster中
+- (BOOL)isRoommateExistedInRosterWithName:(NSString*)name
+{
+    for(NSMutableDictionary *dict in self.userList){
+        if([[dict objectForKey:@"name"] isEqualToString:name]){
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (void)addRosterWithUserName:(NSString*)username NickName:(NSString*)nickname
+{
+    NSLog(@"---add -%@- to Roster", nickname);
+    NSString *jidString = [NSString stringWithFormat:@"%@@%@", username, @"zapxmpp"];
+    XMPPJID *jid = [XMPPJID jidWithString:jidString];
+    [self.xmppRoster addUser:jid withNickname:nickname];
+    [self.xmppRoster subscribePresenceToUser:jid];
+    
+}
 
 //设置好友列表内容
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

@@ -8,6 +8,7 @@
 
 #import "ChooseRoomViewController.h"
 #import <Parse/Parse.h>
+#import "XMPPFramework.h"
 
 @interface ChooseRoomViewController ()
 
@@ -21,6 +22,9 @@
 
 @property (strong, nonatomic) NSString *schoolID;
 @property (strong, nonatomic) NSString *buildingID;
+
+@property (strong, nonatomic) XMPPStream *xmppStream;
+@property (strong, nonatomic) XMPPRoster *xmppRoster;
 
 @end
 
@@ -199,6 +203,10 @@
             if(!error)
             {
                 NSLog(@"success");
+                
+//                //在xmpp的Roster中添加同宿舍好友
+//                [self connectXMPPServerToAddRosters];
+                
             }else
             {
                 NSLog(@"failed");
@@ -332,16 +340,98 @@
     self.buildingID = buildingID;
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+//在xmpp Roster中添加同宿舍联系人
+
+//- (void)connectXMPPServerToAddRosters
+//{
+//    if (self.xmppStream == nil) {
+//        self.xmppStream = [[XMPPStream alloc] init];
+//        [self.xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+//    }
+//    
+//    if (![self.xmppStream isConnected]) {
+//        
+//        PFUser *user = [PFUser currentUser];
+//        NSString *username = user.username;
+//        XMPPJID *jid = [XMPPJID jidWithString:[NSString stringWithFormat:@"%@@zapxmpp", username]];
+//        [self.xmppStream setMyJID:jid];
+//        //        [self.xmppStream setHostName:@"192.168.1.2"];
+//        [self.xmppStream setHostName:@"69.127.17.176"];
+//        NSError *error = nil;
+//        if (![self.xmppStream connectWithTimeout:XMPPStreamTimeoutNone error:&error]) {
+//            NSLog(@"Connect Error: %@", [[error userInfo] description]);
+//        }else {
+//            NSLog(@"connect successfully");
+//        }
+//    }
+//    
+//}
+//
+//- (void)xmppStreamDidConnect:(XMPPStream *)sender
+//{
+//    PFUser *user = [PFUser currentUser];
+//    NSString *password = user.objectId;
+//    NSError *error = nil;
+//    if (![self.xmppStream authenticateWithPassword:password error:&error]) {
+//        NSLog(@"Authenticate Error: %@", [[error userInfo] description]);
+//    }else {
+//        NSLog(@"Auth successfully?");
+//    }
+//    
+//}
+
+//- (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
+//{
+//    //验证成功，开始添加好友
+//    
+//    //初始化XMPPRoster
+//
+//    XMPPRosterCoreDataStorage *xmppRosterStorage = [[XMPPRosterCoreDataStorage alloc] init];
+//    self.xmppRoster = [[XMPPRoster alloc] initWithRosterStorage:xmppRosterStorage];
+//    
+//    [self.xmppRoster activate:self.xmppStream];
+//    
+//    //从Parse中获取同宿舍用户名单
+//    PFUser *currentUser = [PFUser currentUser];
+//    [currentUser refresh];
+//    NSString *roomID = currentUser[@"roomID"];
+//    PFQuery *query = [PFUser query];
+//    [query whereKey:@"roomID" equalTo:roomID];
+//    NSArray *roommatesArray = [query findObjects];
+//    
+//    for (PFUser *roommate in roommatesArray) {
+//        if(roommate[@"username"] != currentUser.username){
+//             [self addRosterWithUserName:roommate.username NickName:roommate[@"name"]];
+//        }
+//    }
+//    
+//}
+//
+//- (void)addRosterWithUserName:(NSString*)username NickName:(NSString*)nickname
+//{
+//    NSString *jidString = [NSString stringWithFormat:@"%@@%@", username, @"zapxmpp"];
+//    XMPPJID *jid = [XMPPJID jidWithString:jidString];
+//    [self.xmppRoster addUser:jid withNickname:nickname];
+//    [self.xmppRoster subscribePresenceToUser:jid];
+//}
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

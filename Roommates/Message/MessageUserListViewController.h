@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "XMPP.h"
+#import "XMPPFramework.h"
 
-@interface MessageUserListViewController : UIViewController <XMPPStreamDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface MessageUserListViewController : UIViewController <XMPPStreamDelegate, UITableViewDelegate, UITableViewDataSource, XMPPRosterDelegate>
 
 @end

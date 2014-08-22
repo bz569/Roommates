@@ -9,7 +9,8 @@
 #import "ViewController.h"
 #import "ChooseSchoolViewController.h"
 #import "ChooseBuildingViewController.h"
+#import "XMPP.h"
 
-@interface ChooseRoomViewController : ViewController <UITextFieldDelegate, ReturnSchoolNameDelegate, ReturnBuildingDelegate>
+@interface ChooseRoomViewController : ViewController <UITextFieldDelegate, ReturnSchoolNameDelegate, ReturnBuildingDelegate, XMPPStreamDelegate>
 
 @end

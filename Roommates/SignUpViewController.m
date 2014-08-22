@@ -212,6 +212,7 @@
 
 - (void)clickCancelButton
 {
+    [self.xmppStream disconnect];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
      
@@ -335,6 +336,7 @@
 - (void)xmppStreamDidRegister:(XMPPStream *)sender
 {
     NSLog(@"XMPP注册成功");
+    [self.xmppStream disconnect];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
