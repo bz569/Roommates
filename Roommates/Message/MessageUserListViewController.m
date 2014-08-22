@@ -434,7 +434,7 @@
     [self.tv_userList deselectRowAtIndexPath:indexPath animated:YES];
     
     //发启一个聊天
-    self.toChatUsername = (NSString*)[self.onlineUsers objectAtIndex:indexPath.row];
+    self.toChatUsername = (NSString*)[[self.userList objectAtIndex:indexPath.row] objectForKey:@"jid"];
     [self performSegueWithIdentifier:@"segue_toChatView" sender:self];
 }
 
@@ -446,8 +446,8 @@
         [messageChatViewController setValue:self.toChatUsername forKey:@"chatWithUser"];
         [messageChatViewController setValue:self.xmppStream forKey:@"xmppStream"];
         
-        NSString *jid = self.toChatUsername;
-        NSArray *tmp = [jid componentsSeparatedByString:@"@"];
+        NSString *jidString = self.toChatUsername;
+        NSArray *tmp = [jidString componentsSeparatedByString:@"@"];
         NSString *msgSender = (NSString*) [tmp objectAtIndex:0];
         NSMutableArray *messagesArray = [self.unreadMessages valueForKey:msgSender];
         [messageChatViewController setValue:messagesArray forKey:@"messages"];
