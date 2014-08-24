@@ -23,6 +23,8 @@
 
 @property (strong, nonatomic) PFUser *curUser;
 
+@property (nonatomic) BOOL isFirstTimeRequestRoster;
+
 @end
 
 @implementation MessageUserListViewController
@@ -48,6 +50,8 @@
     self.unreadMessages = [NSMutableDictionary dictionary];
     
     self.curUser = [PFUser currentUser];
+    
+    self.isFirstTimeRequestRoster = YES;
     
     [self connect];
     
@@ -202,6 +206,7 @@
 //获取好友列表
 - (void)queryRoster
 {
+    self.userList = [NSMutableArray array];
     NSXMLElement *query = [NSXMLElement elementWithName:@"query" xmlns:@"jabber:iq:roster"];
     NSXMLElement *iq = [NSXMLElement elementWithName:@"iq"];
     XMPPJID *myJID = self.xmppStream.myJID;
@@ -249,7 +254,12 @@
                 }
             }
             
-            [self willAddRoster];
+            if (self.isFirstTimeRequestRoster) {
+                [self willAddRoster];
+                self.isFirstTimeRequestRoster = NO;
+            }
+            
+//            [self willAddRoster];
             [self.tv_userList reloadData];
         }
 

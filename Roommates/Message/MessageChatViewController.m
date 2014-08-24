@@ -8,6 +8,7 @@
 
 #import "MessageChatViewController.h"
 #import "MessageCell.h"
+#import <Parse/Parse.h>
 
 @interface MessageChatViewController ()
 
@@ -135,6 +136,8 @@
 - (IBAction)sentMessage:(UIButton *)sender
 {
     NSString *message = self.tf_input.text;
+    PFUser *curUser = [PFUser currentUser];
+    NSString *from = [NSString stringWithFormat:@"%@@zapxmpp", curUser.username];
     
     if(message.length > 0){
         
@@ -150,7 +153,7 @@
         //发送给谁
         [msgToSend addAttributeWithName:@"to" stringValue:self.chatWithUser];
         //由谁发送,需要修改
-        [msgToSend addAttributeWithName:@"from" stringValue:@"test@zapxmpp"];
+        [msgToSend addAttributeWithName:@"from" stringValue:from];
         //组合
         [msgToSend addChild:body];
         
