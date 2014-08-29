@@ -39,6 +39,7 @@
 		B264E60C19546AF40002AB39 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = B264E60B19546AF40002AB39 /* MainTabBarController.m */; };
 		B264E60F19546CC80002AB39 /* FuntionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B264E60E19546CC80002AB39 /* FuntionsViewController.m */; };
 		B264E61219546DBC0002AB39 /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B264E61119546DBC0002AB39 /* MeViewController.m */; };
+		B27FAC5019B0036A005640B4 /* Roommate.m in Sources */ = {isa = PBXBuildFile; fileRef = B27FAC4F19B0036A005640B4 /* Roommate.m */; };
 		B2930126199D40BE0068213E /* XMPPAnonymousAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = B29300B9199D40BE0068213E /* XMPPAnonymousAuthentication.m */; };
 		B2930127199D40BE0068213E /* XMPPDeprecatedDigestAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = B29300BC199D40BE0068213E /* XMPPDeprecatedDigestAuthentication.m */; };
 		B2930128199D40BE0068213E /* XMPPDeprecatedPlainAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = B29300BF199D40BE0068213E /* XMPPDeprecatedPlainAuthentication.m */; };
@@ -244,6 +245,8 @@
 		B264E60E19546CC80002AB39 /* FuntionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FuntionsViewController.m; sourceTree = "<group>"; };
 		B264E61019546DBC0002AB39 /* MeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeViewController.h; sourceTree = "<group>"; };
 		B264E61119546DBC0002AB39 /* MeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeViewController.m; sourceTree = "<group>"; };
+		B27FAC4E19B0036A005640B4 /* Roommate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Roommate.h; path = Model/Roommate.h; sourceTree = "<group>"; };
+		B27FAC4F19B0036A005640B4 /* Roommate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Roommate.m; path = Model/Roommate.m; sourceTree = "<group>"; };
 		B29300B8199D40BE0068213E /* XMPPAnonymousAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPAnonymousAuthentication.h; sourceTree = "<group>"; };
 		B29300B9199D40BE0068213E /* XMPPAnonymousAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPAnonymousAuthentication.m; sourceTree = "<group>"; };
 		B29300BB199D40BE0068213E /* XMPPDeprecatedDigestAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPDeprecatedDigestAuthentication.h; sourceTree = "<group>"; };
@@ -629,6 +632,7 @@
 			isa = PBXGroup;
 			children = (
 				B244C0CB19305B9D002F65F0 /* Main.storyboard */,
+				B27FAC5119B0036D005640B4 /* Model */,
 				B28D13961952C1AE00F6201E /* Login */,
 				B29302BD199DA2C90068213E /* Message */,
 				B28D139A1952C7F500F6201E /* Main */,
@@ -670,6 +674,15 @@
 				B244C0E119305B9D002F65F0 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B27FAC5119B0036D005640B4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B27FAC4E19B0036A005640B4 /* Roommate.h */,
+				B27FAC4F19B0036A005640B4 /* Roommate.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		B28D13961952C1AE00F6201E /* Login */ = {
@@ -1704,6 +1717,7 @@
 				B2930147199D40BE0068213E /* DDDispatchQueueLogFormatter.m in Sources */,
 				B2930128199D40BE0068213E /* XMPPDeprecatedPlainAuthentication.m in Sources */,
 				B264E60F19546CC80002AB39 /* FuntionsViewController.m in Sources */,
+				B27FAC5019B0036A005640B4 /* Roommate.m in Sources */,
 				B2930277199D420E0068213E /* XMPPvCardTempTel.m in Sources */,
 				B293025E199D420E0068213E /* XMPPRoomCoreDataStorage.m in Sources */,
 				B293024B199D420E0068213E /* XMPPProcessOne.m in Sources */,

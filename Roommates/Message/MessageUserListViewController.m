@@ -8,6 +8,7 @@
 
 #import "MessageUserListViewController.h"
 #import <Parse/Parse.h>
+#import "Roommate.h"
 
 @interface MessageUserListViewController ()
 
@@ -17,6 +18,7 @@
 @property (strong, nonatomic) XMPPRoster *xmppRoster;
 @property (strong, nonatomic) NSMutableArray *onlineUsers;
 @property (strong, nonatomic) NSMutableArray *userList;
+@property (strong, nonatomic) NSMutableArray *roommateList;
 @property (strong, nonatomic) NSMutableDictionary *unreadMessages;
 
 @property (strong, nonatomic) NSString *toChatUsername;
@@ -53,6 +55,7 @@
     
     self.isFirstTimeRequestRoster = YES;
     
+    [self fetchRoommateListFromParse];
     [self connect];
     
     
@@ -174,11 +177,17 @@
     if(![self.onlineUsers containsObject:buddyName]){
         [self.onlineUsers addObject:buddyName];
         
-        //在userList设置用户状态为在线
-        for(NSMutableDictionary *userInfo in self.userList) {
-            NSString *jid = [userInfo valueForKey:@"jid"];
-            if([jid isEqualToString:buddyName]){
-                [userInfo setObject:@"online" forKey:@"status"];
+//        //在userList设置用户状态为在线
+//        for(NSMutableDictionary *userInfo in self.userList) {
+//            NSString *jid = [userInfo valueForKey:@"jid"];
+//            if([jid isEqualToString:buddyName]){
+//                [userInfo setObject:@"online" forKey:@"status"];
+//            }
+//        }
+
+        for(Roommate *roommate in self.roommateList){
+            if([roommate.jid isEqualToString:buddyName]){
+                roommate.status = @"online";
             }
         }
         
@@ -192,11 +201,17 @@
     NSLog(@"buddyWentOffline");
     [self.onlineUsers removeObject:buddyName];
     
-    //在userList设置用户状态为离线
-    for(NSMutableDictionary *userInfo in self.userList) {
-        NSString *jid = [userInfo valueForKey:@"jid"];
-        if([jid isEqualToString:buddyName]){
-            [userInfo setObject:@"offline" forKey:@"status"];
+//    //在userList设置用户状态为离线
+//    for(NSMutableDictionary *userInfo in self.userList) {
+//        NSString *jid = [userInfo valueForKey:@"jid"];
+//        if([jid isEqualToString:buddyName]){
+//            [userInfo setObject:@"offline" forKey:@"status"];
+//        }
+//    }
+    
+    for(Roommate *roommate in self.roommateList){
+        if([roommate.jid isEqualToString:buddyName]){
+            roommate.status = @"offline";
         }
     }
     
@@ -310,22 +325,19 @@
     //从Parse中获取同宿舍用户名单
 //    PFUser *currentUser = [PFUser currentUser];
 //    [currentUser refresh];
-    NSString *roomID = self.curUser[@"roomID"];
-    PFQuery *query = [PFUser query];
-    [query whereKey:@"roomID" equalTo:roomID];
-    NSArray *roommatesArray = [query findObjects];
+//    NSString *roomID = self.curUser[@"roomID"];
+//    PFQuery *query = [PFUser query];
+//    [query whereKey:@"roomID" equalTo:roomID];
+//    NSArray *roommatesArray = [query findObjects];
     
     //从parse获取roommate名单，不是自己，且不在Roster中得，发送添加好友请求
-    for (PFUser *roommate in roommatesArray) {
-        NSLog(@"roomate=%@, self=%@", roommate[@"username"], self.curUser.username);
+    for (Roommate *roommate in self.roommateList) {
+        NSLog(@"roomate=%@, self=%@", roommate.userName, self.curUser.username);
         
-        if(![roommate.username isEqualToString: self.curUser.username]){
-            
-            if(![self isRoommateExistedInRosterWithName:roommate[@"name"]]){
-                [self addRosterWithUserName:roommate.username NickName:roommate[@"name"]];
-            }
-            
+        if(![self isRoommateExistedInRosterWithName:roommate.name]){
+            [self addRosterWithUserName:roommate.userName NickName:roommate.name];
         }
+        
     }
 }
 
@@ -354,7 +366,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 //    return [self.onlineUsers count];
-    return [self.userList count];
+//    return [self.userList count];
+    return [self.roommateList count];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -391,17 +404,18 @@
     cellView.backgroundColor = [UIColor colorWithRed:53.0/255.0 green:61.0/255.0 blue:73.0/255.0 alpha:1.0];
     
 //    cellView.textLabel.text = (NSString*)[self.onlineUsers objectAtIndex:indexPath.row];
-    NSMutableDictionary *userInfo = [self.userList objectAtIndex:indexPath.row];
+//    NSMutableDictionary *userInfo = [self.userList objectAtIndex:indexPath.row];
+    Roommate *roommate = [self.roommateList objectAtIndex:indexPath.row];
 //    cellView.textLabel.text = [userInfo valueForKey:@"name"];
 
     //设置用户状态显示
     UILabel *l_name = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, 250, 50)];
-    l_name.text = [userInfo valueForKey:@"name"];
+    l_name.text = roommate.name;
     
-    NSString *status =[userInfo valueForKey:@"status"];
+    NSString *status = roommate.status;
     if([status isEqualToString:@"online"]){
         l_name.textColor = [UIColor whiteColor];
-    }else if([[userInfo valueForKey:@"status"] isEqualToString:@"offline"]) {
+    }else if([status isEqualToString:@"offline"]) {
         l_name.textColor = [UIColor grayColor];
     }
     [cellView addSubview:l_name];
@@ -417,7 +431,7 @@
     l_unreadMsgCount.textColor = [UIColor colorWithRed:0 green:187.0/255.0 blue:142.0/255.0 alpha:1.0];
     
     NSInteger count = 0;
-    NSString *jid = [userInfo valueForKey:@"jid"];
+    NSString *jid = roommate.jid;
     NSArray *tmp = [jid componentsSeparatedByString:@"@"];
     NSString *msgSender = (NSString*) [tmp objectAtIndex:0];
     NSMutableArray *messagesArray = [self.unreadMessages valueForKey:msgSender];
@@ -444,7 +458,8 @@
     [self.tv_userList deselectRowAtIndexPath:indexPath animated:YES];
     
     //发启一个聊天
-    self.toChatUsername = (NSString*)[[self.userList objectAtIndex:indexPath.row] objectForKey:@"jid"];
+    Roommate *toChatWithRoommate = [self.roommateList objectAtIndex:indexPath.row];
+    self.toChatUsername = toChatWithRoommate.jid;
     [self performSegueWithIdentifier:@"segue_toChatView" sender:self];
 }
 
@@ -468,6 +483,38 @@
 {
     [self goOfflineAndDisconnect];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+//从parse获取RoommateList
+- (void)fetchRoommateListFromParse
+{
+    self.roommateList = [NSMutableArray array];
+    
+    if(!self.curUser){
+        self.curUser = [PFUser currentUser];
+    }
+    
+    NSString *roomID = self.curUser[@"roomID"];
+    PFQuery *query = [PFUser query];
+    [query whereKey:@"roomID" equalTo:roomID];
+    NSArray *pfRoommatesArray = [query findObjects];
+    
+    for (PFUser *pfRoommate in pfRoommatesArray) {
+//        NSLog(@"roomate=%@, self=%@", roommate[@"username"], self.curUser.username);
+        
+        if(![pfRoommate.username isEqualToString: self.curUser.username]){
+            Roommate *roommate = [[Roommate alloc] init];
+            roommate.userID = pfRoommate.objectId;
+            roommate.jid = [[NSString stringWithFormat:@"%@@zapxmpp", pfRoommate.username] lowercaseString];
+            roommate.userName = pfRoommate.username;
+            roommate.name = pfRoommate[@"name"];
+            roommate.status = @"offline";
+            
+            [self.roommateList addObject:roommate];
+        }
+    }
+
+    
 }
 
 @end
