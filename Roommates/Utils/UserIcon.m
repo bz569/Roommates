@@ -57,8 +57,10 @@
     NSString *imageName = [NSString stringWithFormat:@"icon_%@.png", userID];
     NSString *imagePath = [iconsPath stringByAppendingString:[NSString stringWithFormat:@"/%@", imageName]];
     
-    if ([[NSFileManager defaultManager] fileExistsAtPath:imagePath isDirectory:NO]) {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:imagePath isDirectory:nil]) {
         iconImage = [[UIImage alloc] initWithContentsOfFile:imagePath];
+    }else {
+        iconImage = [UIImage imageNamed:@"default_userIcon"];
     }
     
     return iconImage;
