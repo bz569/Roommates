@@ -9,6 +9,7 @@
 #import "MessageChatViewController.h"
 #import "MessageCell.h"
 #import <Parse/Parse.h>
+#import "UserIcon.h"
 
 @interface MessageChatViewController ()
 
@@ -17,6 +18,9 @@
 
 @property (strong, nonatomic) NSString *chatWithUser;
 @property (strong, nonatomic) XMPPStream *xmppStream;
+
+@property (strong, nonatomic) UIImage *selfIcon;
+@property (strong, nonatomic) UIImage *roommateIcon;
 
 @property (strong, nonatomic) NSMutableArray *messages;
 
@@ -56,6 +60,15 @@
     
     //获取键盘高度
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    
+    //获取自己的头像
+    PFUser *curUser = [PFUser currentUser];
+    UIImage *icon = [UserIcon getIconWithUserID:curUser.objectId];
+    if(icon){
+        self.selfIcon = icon;
+    }else {
+        self.selfIcon = [UIImage imageNamed:@"default_userIcon"];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -260,7 +273,7 @@
         
         //头像
         UIImageView *iv_userIcon = [[UIImageView alloc] initWithFrame:CGRectMake(260, (height - 20) / 2, 40, 40)];
-        iv_userIcon.image = [UIImage imageNamed:@"default_userIcon"];
+        iv_userIcon.image = self.selfIcon;
         iv_userIcon.layer.masksToBounds = YES;
         iv_userIcon.layer.cornerRadius = 20;
         [cellView addSubview:iv_userIcon];
@@ -277,7 +290,7 @@
         
         //头像
         UIImageView *iv_userIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, (height - 20) / 2, 40, 40)];
-        iv_userIcon.image = [UIImage imageNamed:@"default_userIcon"];
+        iv_userIcon.image = self.roommateIcon;
         iv_userIcon.layer.masksToBounds = YES;
         iv_userIcon.layer.cornerRadius = 20;
         [cellView addSubview:iv_userIcon];

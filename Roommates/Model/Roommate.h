@@ -15,6 +15,6 @@
 @property (strong, nonatomic) NSString *userName;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *status;
-//@property (strong, nonatomic) NSData *iconData;
+@property (strong, nonatomic) UIImage *icon;
 
 @end

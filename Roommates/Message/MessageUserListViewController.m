@@ -9,6 +9,7 @@
 #import "MessageUserListViewController.h"
 #import <Parse/Parse.h>
 #import "Roommate.h"
+#import "UserIcon.h"
 
 @interface MessageUserListViewController ()
 
@@ -21,7 +22,7 @@
 @property (strong, nonatomic) NSMutableArray *roommateList;
 @property (strong, nonatomic) NSMutableDictionary *unreadMessages;
 
-@property (strong, nonatomic) NSString *toChatUsername;
+@property (strong, nonatomic) Roommate *toChatWithRoommate;
 
 @property (strong, nonatomic) PFUser *curUser;
 
@@ -421,7 +422,8 @@
     [cellView addSubview:l_name];
     
     UIImageView *iv_userIcon = [[UIImageView alloc] initWithFrame:CGRectMake(20, 10, 30, 30)];
-    iv_userIcon.image = [UIImage imageNamed:@"default_userIcon"];
+//    iv_userIcon.image = [UIImage imageNamed:@"default_userIcon"];
+    iv_userIcon.image = roommate.icon;
     iv_userIcon.layer.masksToBounds = YES;
     iv_userIcon.layer.cornerRadius = 15;
     [cellView addSubview:iv_userIcon];
@@ -458,8 +460,9 @@
     [self.tv_userList deselectRowAtIndexPath:indexPath animated:YES];
     
     //发启一个聊天
-    Roommate *toChatWithRoommate = [self.roommateList objectAtIndex:indexPath.row];
-    self.toChatUsername = toChatWithRoommate.jid;
+//    Roommate *toChatWithRoommate = [self.roommateList objectAtIndex:indexPath.row];
+//    self.toChatUsername = toChatWithRoommate.jid;
+    self.toChatWithRoommate = [self.roommateList objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"segue_toChatView" sender:self];
 }
 
@@ -468,12 +471,15 @@
     if([segue.identifier isEqualToString:@"segue_toChatView"]){
         
         id messageChatViewController = segue.destinationViewController;
-        [messageChatViewController setValue:self.toChatUsername forKey:@"chatWithUser"];
+//        [messageChatViewController setValue:self.toChatUsername forKey:@"chatWithUser"];
+        [messageChatViewController setValue:self.toChatWithRoommate.jid forKey:@"chatWithUser"];
+        [messageChatViewController setValue:self.toChatWithRoommate.icon forKey:@"roommateIcon"];
         [messageChatViewController setValue:self.xmppStream forKey:@"xmppStream"];
         
-        NSString *jidString = self.toChatUsername;
-        NSArray *tmp = [jidString componentsSeparatedByString:@"@"];
-        NSString *msgSender = (NSString*) [tmp objectAtIndex:0];
+//        NSString *jidString = self.toChatUsername;
+//        NSArray *tmp = [jidString componentsSeparatedByString:@"@"];
+//        NSString *msgSender = (NSString*) [tmp objectAtIndex:0];
+        NSString *msgSender = self.toChatWithRoommate.userName;
         NSMutableArray *messagesArray = [self.unreadMessages valueForKey:msgSender];
         [messageChatViewController setValue:messagesArray forKey:@"messages"];
     }
@@ -509,6 +515,13 @@
             roommate.userName = pfRoommate.username;
             roommate.name = pfRoommate[@"name"];
             roommate.status = @"offline";
+            
+            UIImage *icon = [UserIcon getIconWithUserID:roommate.userID];
+            if(icon) {
+                roommate.icon = icon;
+            }else {
+                roommate.icon = [UIImage imageNamed:@"default_userIcon"];
+            }
             
             [self.roommateList addObject:roommate];
         }

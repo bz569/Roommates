@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import <Parse/Parse.h>
+#import "UserIcon.h"
 
 @interface ViewController ()
 
@@ -19,7 +20,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    
+    [UserIcon refreshLocalIcons];
 }
 
 - (void)didReceiveMemoryWarning

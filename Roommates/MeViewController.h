@@ -8,6 +8,6 @@
 
 #import "ViewController.h"
 
-@interface MeViewController : ViewController
+@interface MeViewController : ViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @end
