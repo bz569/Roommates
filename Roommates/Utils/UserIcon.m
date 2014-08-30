@@ -29,7 +29,7 @@
                 //将图片保存在本地Docums/Icons文件夹中
                 NSString *documentsPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
                 NSString *iconsPath = [documentsPath stringByAppendingString:@"/Icons"];
-                NSLog(@"iconsPath=%@", iconsPath);
+//                NSLog(@"iconsPath=%@", iconsPath);
             
                 NSFileManager *fileManager = [NSFileManager defaultManager];
                 [fileManager createDirectoryAtPath:iconsPath withIntermediateDirectories:YES attributes:nil error:nil];
@@ -37,7 +37,7 @@
                 //设置图片名称
                 NSString *imageName = [NSString stringWithFormat:@"icon_%@.png", user.objectId];
                 NSString *imagePath = [iconsPath stringByAppendingString:[NSString stringWithFormat:@"/%@", imageName]];
-                NSLog(@"imagePath=%@", imagePath);
+//                NSLog(@"imagePath=%@", imagePath);
             
                 //保存图片
                 [fileManager createFileAtPath:imagePath contents:iconData attributes:nil];
