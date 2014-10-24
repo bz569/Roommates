@@ -23,7 +23,38 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+//    
+////    //获取键盘高度
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    
+    
+    
+    
+    [self setTextFields];
 }
+
+//- (void)keyboardWillChangeFrame:(NSNotification*)notification
+//{
+//    NSDictionary *userInfo = [notification userInfo];
+//    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+//    CGRect keyboardRect = [aValue CGRectValue];
+//    
+//    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+//    NSTimeInterval animationDuration;
+//    [animationDurationValue getValue:&animationDuration];
+//    
+//    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+//    [UIView setAnimationDuration:animationDuration];
+//    
+////    self.view.frame = CGRectMake(0, 0 - keyboardRect.size.height, 320, 568);
+//    //修改输入区域的位置
+//    self.v_loginInput.frame = CGRectMake(36, 132, 248, 160);
+////    CGRect newframe = self.v_loginInput.frame;
+//    [UIView commitAnimations];
+//}
+
 
 - (void)viewWillLayoutSubviews
 {
@@ -33,7 +64,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self setTextFields];
+//    [self setTextFields];
 }
 
 - (void)setTextFields
@@ -122,23 +153,25 @@
     if(offset > 0)
     {
 //        CGRect rect = CGRectMake(originFrame.origin.x, originFrame.origin.y - offset, self.v_loginInput.frame.size.width, self.v_loginInput.frame.size.height);
-        CGRect rect = CGRectMake(originFrame.origin.x, originFrame.origin.y - offset, self.v_loginInput.frame.size.width, self.v_loginInput.frame.size.height);
+        CGRect rect = CGRectMake(36, 132, 248, 160);
         self.v_loginInput.frame = rect;
     }
     
+    CGRect newFrame = self.v_loginInput.frame;
+
     [UIView commitAnimations];
 }
 
-//- (void)textFieldDidEndEditing:(UITextField *)textField
-//{
-//    NSTimeInterval animationDuration = 0.30f;
-//    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-//    [UIView setAnimationDuration:animationDuration];
-//    
-//    self.v_loginInput.frame = CGRectMake(36.0, 281.0, 248.0, 160.0);
-//    [UIView commitAnimations];
-//    
-//}
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    NSTimeInterval animationDuration = 0.30f;
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    
+    self.v_loginInput.frame = CGRectMake(36.0, 281.0, 248.0, 160.0);
+    [UIView commitAnimations];
+    
+}
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {

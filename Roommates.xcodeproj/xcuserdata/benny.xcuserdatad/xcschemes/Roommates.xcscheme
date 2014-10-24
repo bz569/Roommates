@@ -28,16 +28,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B244C0D619305B9D002F65F0"
-               BuildableName = "RoommatesTests.xctest"
-               BlueprintName = "RoommatesTests"
-               ReferencedContainer = "container:Roommates.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

@@ -304,36 +304,36 @@
    }
 
 
-//出现键盘时 界面上移
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    CGRect originFrame = self.view.frame;
-    float offset = originFrame.origin.y + originFrame.size.height - (self.view.frame.size.height - 216.0);
-    
-    NSTimeInterval animationDuration = 0.30f;
-    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-    [UIView setAnimationDuration:animationDuration];
-    
-    if(offset > 0)
-    {
-        //        CGRect rect = CGRectMake(originFrame.origin.x, originFrame.origin.y - offset, self.v_loginInput.frame.size.width, self.v_loginInput.frame.size.height);
-        CGRect rect = CGRectMake(originFrame.origin.x, originFrame.origin.y - offset, self.view.frame.size.width, self.view.frame.size.height);
-        self.view.frame = rect;
-    }
-    
-    [UIView commitAnimations];
-}
+////出现键盘时 界面上移
+//- (void)textFieldDidBeginEditing:(UITextField *)textField
+//{
+//    CGRect originFrame = self.view.frame;
+//    float offset = originFrame.origin.y + originFrame.size.height - (self.view.frame.size.height - 216.0);
+//    
+//    NSTimeInterval animationDuration = 0.30f;
+//    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+//    [UIView setAnimationDuration:animationDuration];
+//    
+//    if(offset > 0)
+//    {
+//        //        CGRect rect = CGRectMake(originFrame.origin.x, originFrame.origin.y - offset, self.v_loginInput.frame.size.width, self.v_loginInput.frame.size.height);
+//        CGRect rect = CGRectMake(originFrame.origin.x, originFrame.origin.y - offset, self.view.frame.size.width, self.view.frame.size.height);
+//        self.view.frame = rect;
+//    }
+//    
+//    [UIView commitAnimations];
+//}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
 
     [self.tf_input resignFirstResponder];
-    NSTimeInterval animationDuration = 0.30f;
-    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-    [UIView setAnimationDuration:animationDuration];
-        
-    self.view.frame = CGRectMake(0, 0, 320, 568);
-    [UIView commitAnimations];
+//    NSTimeInterval animationDuration = 0.30f;
+//    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+//    [UIView setAnimationDuration:animationDuration];
+//        
+//    self.view.frame = CGRectMake(0, 0, 320, 568);
+//    [UIView commitAnimations];
     
     return YES;
 }
