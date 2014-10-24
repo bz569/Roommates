@@ -27,14 +27,14 @@
 
 - (void)viewWillLayoutSubviews
 {
-    [self setTextFields];
+//    [self setTextFields];
 }
 
-//- (void)viewWillAppear:(BOOL)animated
-//{
-//    [super viewWillAppear:YES];
-//    [self setTextFields];
-//}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self setTextFields];
+}
 
 - (void)setTextFields
 {
