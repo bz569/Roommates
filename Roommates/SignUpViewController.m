@@ -49,31 +49,32 @@
 //    [self.view addSubview:cancelBtn];
 }
 
-- (void) setViews
-{
-    //init loginInfo view
-    self.v_loginInfo = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 568)];
-    self.v_loginInfo.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"signUp1"]];
-    [self.view addSubview:self.v_loginInfo];
-    
-    self.v_loginInfoInput = [[UIView alloc] initWithFrame:CGRectMake(36.0, 235.0, 248.0, 254.0)];
-    self.v_loginInfoInput.backgroundColor = [UIColor colorWithRed:48.0/255.0 green:69.0/255.0 blue:90.0/255.0 alpha:1.0];
-    [self.v_loginInfo addSubview:_v_loginInfoInput];
-    
-    [self setLoginInfoInputView];
-    
-    UIButton *cancelBtn = [[UIButton alloc] initWithFrame:CGRectMake(80, 500, 160, 22)];
-    cancelBtn.backgroundColor = [UIColor colorWithRed:233.0/255.0 green:151.0/255.0 blue:29.0/255.0 alpha:1.0];
-    [cancelBtn setTitle:@"取    消" forState:UIControlStateNormal];
-    cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:12.0];
-    [cancelBtn addTarget:self action:@selector(clickCancelButton) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:cancelBtn];
-}
+//- (void) setViews
+//{
+//    //init loginInfo view
+//    self.v_loginInfo = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 568)];
+//    self.v_loginInfo.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"signUp1"]];
+//    [self.view addSubview:self.v_loginInfo];
+//    
+//    self.v_loginInfoInput = [[UIView alloc] initWithFrame:CGRectMake(36.0, 235.0, 248.0, 254.0)];
+//    self.v_loginInfoInput.backgroundColor = [UIColor colorWithRed:48.0/255.0 green:69.0/255.0 blue:90.0/255.0 alpha:1.0];
+//    [self.v_loginInfo addSubview:_v_loginInfoInput];
+//    
+//    [self setLoginInfoInputView];
+//    
+//    UIButton *cancelBtn = [[UIButton alloc] initWithFrame:CGRectMake(80, 500, 160, 22)];
+//    cancelBtn.backgroundColor = [UIColor colorWithRed:233.0/255.0 green:151.0/255.0 blue:29.0/255.0 alpha:1.0];
+//    [cancelBtn setTitle:@"取    消" forState:UIControlStateNormal];
+//    cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:12.0];
+//    [cancelBtn addTarget:self action:@selector(clickCancelButton) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:cancelBtn];
+//}
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
+    NSLog(@"WTF");
     //init loginInfo view
     self.v_loginInfo = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 568)];
     self.v_loginInfo.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"signUp1"]];
