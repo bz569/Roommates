@@ -157,7 +157,6 @@
         self.v_loginInput.frame = rect;
     }
     
-    CGRect newFrame = self.v_loginInput.frame;
 
     [UIView commitAnimations];
 }
